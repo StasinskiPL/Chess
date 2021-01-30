@@ -1,1 +1,1 @@
-#Chess with react, ts , Context
+# Chess with React, TS, Context, useReducer
