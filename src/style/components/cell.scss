@@ -1,0 +1,32 @@
+.cell{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    &.whiteCell{
+        background-color: #c8a978;
+    }
+    &.blackCell{
+        background-color: #8a6240;
+    }
+    &.white{
+        svg{
+            color: #f9f9f9;
+        }
+    }
+    &.taken{
+        cursor: grab;
+    }
+    &.possibleMove{
+        opacity: 0.7;
+        cursor: pointer;
+    }
+    &.selected{
+        background-color: rgb(78, 179, 132) !important;
+    }
+    svg{
+        font-size: 2rem;
+        @include mediumMq{
+            font-size: 2.875rem;
+        }
+    }
+}

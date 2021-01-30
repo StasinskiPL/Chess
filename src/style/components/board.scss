@@ -1,0 +1,22 @@
+.board{
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0rem 0.5rem;
+    &-inner{
+        border: 3px solid black;
+        @include maxWidth;
+        max-width: 600px;
+        width: 98vw;
+        height: 80vh;
+        max-height: 400px;
+        display: grid;
+        grid-template-columns: repeat(8, 1fr);
+        grid-template-rows: repeat(8,1fr);
+        @include mediumMq{
+            max-height: 600px;
+        }    
+    }
+}

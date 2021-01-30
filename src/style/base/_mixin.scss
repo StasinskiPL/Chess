@@ -1,0 +1,48 @@
+@mixin maxWidth{
+    max-width: $max-width;
+    margin: 0 auto;
+}
+
+
+@mixin link{
+    text-decoration: none;
+    color: $color-black-1;
+    transition: color 0.3s linear;
+    @if (color:$color-black-1){
+        &:hover,&:focus{
+            color: lighten($color-black-1, 35);
+        }
+    }   
+}
+
+@mixin btn{
+    border: transparent;
+    background-color: transparent;
+    cursor: pointer;
+    border-radius: 0.3rem;
+    color: $color-black-1;
+    @if (color:$color-black-1){
+        transition: color 0.3s linear;
+        &:hover,&:focus{
+            color: lighten($color-black-1, 35);
+        }
+    }  
+}
+
+@mixin smallMq {
+    @media screen and (min-width: $smallWidth) {
+        @content;
+    }
+}
+
+@mixin mediumMq {
+    @media screen and (min-width: $mediumWidth) {
+        @content;
+    }
+}
+
+@mixin deskopMq {
+    @media screen and (min-width: $deskopWidth) {
+        @content;
+    }
+}
