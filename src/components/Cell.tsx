@@ -4,6 +4,7 @@ import { FaChessPawn, FaChessBishop, FaChessKnight } from "react-icons/fa";
 import { GiChessQueen, GiChessRook, GiChessKing } from "react-icons/gi";
 import { useChessContext, Turn } from "../context/ChessContext";
 import { showPawnPossibleMoves } from "../logic/pawnPossibleMoves";
+import { showRookPossibleMoves } from "../logic/rookPossibleMoves";
 import { movePawn } from "../reducer/reducer";
 
 const CellComponent: React.FC<Cell> = ({ pawn, taken, player, id }) => {
@@ -54,9 +55,12 @@ const CellComponent: React.FC<Cell> = ({ pawn, taken, player, id }) => {
     }
     if (taken && turn === player) {
       setSelectedPawn(id);
+      if (player !== undefined) {
       if (pawn === Pawns.pawn) {
-        if (player !== undefined) {
           setPossibleMoves(showPawnPossibleMoves(grid, id, player));
+        }
+        if(pawn === Pawns.rook){
+          setPossibleMoves(showRookPossibleMoves(grid,id,player))
         }
       }
     }
