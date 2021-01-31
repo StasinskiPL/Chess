@@ -6,6 +6,7 @@ import { useChessContext, Turn } from "../context/ChessContext";
 import { showPawnPossibleMoves } from "../logic/pawnPossibleMoves";
 import { showRookPossibleMoves } from "../logic/rookPossibleMoves";
 import { movePawn } from "../reducer/reducer";
+import { showBishopPossibleMoves } from "../logic/bishopPossibleMoves";
 
 const CellComponent: React.FC<Cell> = ({ pawn, taken, player, id }) => {
   const {
@@ -61,6 +62,10 @@ const CellComponent: React.FC<Cell> = ({ pawn, taken, player, id }) => {
         }
         if(pawn === Pawns.rook){
           setPossibleMoves(showRookPossibleMoves(grid,id,player))
+        }
+        if(pawn === Pawns.bishop){
+          setPossibleMoves(showBishopPossibleMoves(grid,id,player))
+
         }
       }
     }
