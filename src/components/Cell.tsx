@@ -2,11 +2,12 @@ import React from "react";
 import { Cell, Pawns, PlayerColor } from "../types";
 import { FaChessPawn, FaChessBishop, FaChessKnight } from "react-icons/fa";
 import { GiChessQueen, GiChessRook, GiChessKing } from "react-icons/gi";
+import { movePawn } from "../reducer/reducer";
 import { useChessContext, Turn } from "../context/ChessContext";
 import { showPawnPossibleMoves } from "../logic/pawnPossibleMoves";
 import { showRookPossibleMoves } from "../logic/rookPossibleMoves";
-import { movePawn } from "../reducer/reducer";
 import { showBishopPossibleMoves } from "../logic/bishopPossibleMoves";
+import { showQuennPossibleMoves } from "../logic/quennPossibleMoves";
 
 const CellComponent: React.FC<Cell> = ({ pawn, taken, player, id }) => {
   const {
@@ -41,7 +42,6 @@ const CellComponent: React.FC<Cell> = ({ pawn, taken, player, id }) => {
   const selectHandler = () => {
     if (selectedPawn !== null && possibleMoves.some((p: number) => p === id)) {
       const pawn = grid.find((cell: Cell) => cell.id === selectedPawn);
-      console.log(pawn)
       dispatch(
         movePawn({
           pawn: pawn.pawn,
@@ -65,7 +65,9 @@ const CellComponent: React.FC<Cell> = ({ pawn, taken, player, id }) => {
         }
         if(pawn === Pawns.bishop){
           setPossibleMoves(showBishopPossibleMoves(grid,id,player))
-
+        }
+        if(pawn === Pawns.queen){
+          setPossibleMoves(showQuennPossibleMoves(grid,id,player))
         }
       }
     }
