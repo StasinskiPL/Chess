@@ -8,6 +8,7 @@ import { showPawnPossibleMoves } from "../logic/pawnPossibleMoves";
 import { showRookPossibleMoves } from "../logic/rookPossibleMoves";
 import { showBishopPossibleMoves } from "../logic/bishopPossibleMoves";
 import { showQuennPossibleMoves } from "../logic/quennPossibleMoves";
+import { showKnightPossibleMoves } from "../logic/knightPossibleMoves";
 
 const CellComponent: React.FC<Cell> = ({ pawn, taken, player, id }) => {
   const {
@@ -68,6 +69,9 @@ const CellComponent: React.FC<Cell> = ({ pawn, taken, player, id }) => {
         }
         if(pawn === Pawns.queen){
           setPossibleMoves(showQuennPossibleMoves(grid,id,player))
+        }
+        if(pawn === Pawns.knight){
+          setPossibleMoves(showKnightPossibleMoves(grid,id,player));
         }
       }
     }
