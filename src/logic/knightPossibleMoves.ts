@@ -1,4 +1,3 @@
-import { callbackify } from "util";
 import { Grid, PlayerColor } from "../types";
 
 const checkCell = (

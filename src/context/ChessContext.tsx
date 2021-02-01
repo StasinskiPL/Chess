@@ -10,6 +10,11 @@ interface Props{
     children:React.ReactNode
 }
 
+interface Mat{
+    white: boolean,
+    black: boolean,
+}
+
 
 const ContextProvider = createContext<any>({})
 
@@ -18,6 +23,7 @@ export const ChessContext:React.FC<Props> = ({children}) => {
     const [turn,setTurn] = useState<Turn>(Turn.WHITE);
     const [selectedPawn,setSelectedPawn] = useState<number | null>(null);
   const [possibleMoves, setPossibleMoves] = useState<number[]>([]);
+  const [mat, setMat] = useState<Mat>({white:false,black:false});
 
 
 
@@ -25,7 +31,8 @@ export const ChessContext:React.FC<Props> = ({children}) => {
 
     return (
         <ContextProvider.Provider value={{state,dispatch,turn,setTurn,
-            selectedPawn,setSelectedPawn,possibleMoves,setPossibleMoves}}>
+            selectedPawn,setSelectedPawn,possibleMoves,setPossibleMoves,
+            mat,setMat}}>
             {children}
         </ContextProvider.Provider>
     )

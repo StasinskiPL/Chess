@@ -4,11 +4,7 @@ import { FaChessPawn, FaChessBishop, FaChessKnight } from "react-icons/fa";
 import { GiChessQueen, GiChessRook, GiChessKing } from "react-icons/gi";
 import { movePawn } from "../reducer/reducer";
 import { useChessContext, Turn } from "../context/ChessContext";
-import { showPawnPossibleMoves } from "../logic/pawnPossibleMoves";
-import { showRookPossibleMoves } from "../logic/rookPossibleMoves";
-import { showBishopPossibleMoves } from "../logic/bishopPossibleMoves";
-import { showQuennPossibleMoves } from "../logic/quennPossibleMoves";
-import { showKnightPossibleMoves } from "../logic/knightPossibleMoves";
+import { showPossibleMoves } from "../logic";
 
 const CellComponent: React.FC<Cell> = ({ pawn, taken, player, id }) => {
   const {
@@ -19,6 +15,8 @@ const CellComponent: React.FC<Cell> = ({ pawn, taken, player, id }) => {
     setPossibleMoves,
     possibleMoves,
     dispatch,
+    mat,
+    setMat,
     state: { grid },
   } = useChessContext();
   let cellColor = "blackCell";
@@ -51,28 +49,32 @@ const CellComponent: React.FC<Cell> = ({ pawn, taken, player, id }) => {
           playerColor: pawn.player,
         })
       );
+      const isMat = showPossibleMoves(pawn.pawn, grid, id, pawn.player).some(
+        (id) => {
+          const cell: Cell = grid.find((cell: Cell) => cell.id === id);
+          if (cell && cell.pawn === Pawns.king) {
+            return true;
+          }
+          return false;
+        }
+      );
+      if (isMat) {
+        if (pawn.player === PlayerColor.WHITE) {
+          setMat((m: any) => ({ ...m, black: true }));
+        } else setMat((m: any) => ({ ...m, white: true }));
+      }
       setPossibleMoves([]);
       setSelectedPawn(null);
       setTurn((t: Turn) => (t === Turn.WHITE ? Turn.BLACK : Turn.WHITE));
     }
+    //////////////////////////////////
     if (taken && turn === player) {
+     if(mat.white || mat.black){
+       
+     }
       setSelectedPawn(id);
-      if (player !== undefined) {
-      if (pawn === Pawns.pawn) {
-          setPossibleMoves(showPawnPossibleMoves(grid, id, player));
-        }
-        if(pawn === Pawns.rook){
-          setPossibleMoves(showRookPossibleMoves(grid,id,player))
-        }
-        if(pawn === Pawns.bishop){
-          setPossibleMoves(showBishopPossibleMoves(grid,id,player))
-        }
-        if(pawn === Pawns.queen){
-          setPossibleMoves(showQuennPossibleMoves(grid,id,player))
-        }
-        if(pawn === Pawns.knight){
-          setPossibleMoves(showKnightPossibleMoves(grid,id,player));
-        }
+      if (player !== undefined && pawn !== null) {
+        setPossibleMoves(showPossibleMoves(pawn, grid, id, player));
       }
     }
   };
