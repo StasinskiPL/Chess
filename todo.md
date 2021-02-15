@@ -3,3 +3,5 @@
 - Pawn Promotion
 - draw
 - adding react-dnd
+- game result
+- checking if its just check or chackmate
