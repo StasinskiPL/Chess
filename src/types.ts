@@ -1,9 +1,9 @@
 export enum PlayerColor{
-    WHITE,BLACK
+    WHITE="WHITE",BLACK="BLACK"
 }
 
 export enum Pawns{
-    pawn,rook,knight,king,queen,bishop
+    pawn="PAWN",rook="ROOK",knight="KNIGHT",king="KING",queen="QUEEN",bishop="BISHOP"
 }
 
 

@@ -5,6 +5,7 @@ import { GiChessQueen, GiChessRook, GiChessKing } from "react-icons/gi";
 import { movePawn } from "../reducer/reducer";
 import { useChessContext, Turn } from "../context/ChessContext";
 import { showPossibleMoves } from "../logic";
+import { willCheckHandler } from "../logic/checkHandler";
 
 const CellComponent: React.FC<Cell> = ({ pawn, taken, player, id }) => {
   const {
@@ -15,8 +16,6 @@ const CellComponent: React.FC<Cell> = ({ pawn, taken, player, id }) => {
     setPossibleMoves,
     possibleMoves,
     dispatch,
-    mat,
-    setMat,
     state: { grid },
   } = useChessContext();
   let cellColor = "blackCell";
@@ -41,6 +40,19 @@ const CellComponent: React.FC<Cell> = ({ pawn, taken, player, id }) => {
   const selectHandler = () => {
     if (selectedPawn !== null && possibleMoves.some((p: number) => p === id)) {
       const pawn = grid.find((cell: Cell) => cell.id === selectedPawn);
+      const {whiteMat,blackMat} = willCheckHandler(grid,selectedPawn,id)
+      if(turn){
+        if(turn === PlayerColor.WHITE && whiteMat){
+          return
+        }else{
+          if(turn === PlayerColor.BLACK && blackMat){
+            return
+          }
+        }
+
+      }
+
+
       dispatch(
         movePawn({
           pawn: pawn.pawn,
@@ -49,32 +61,27 @@ const CellComponent: React.FC<Cell> = ({ pawn, taken, player, id }) => {
           playerColor: pawn.player,
         })
       );
-      const isMat = showPossibleMoves(pawn.pawn, grid, id, pawn.player).some(
-        (id) => {
-          const cell: Cell = grid.find((cell: Cell) => cell.id === id);
-          if (cell && cell.pawn === Pawns.king) {
-            return true;
-          }
-          return false;
-        }
-      );
-      if (isMat) {
-        if (pawn.player === PlayerColor.WHITE) {
-          setMat((m: any) => ({ ...m, black: true }));
-        } else setMat((m: any) => ({ ...m, white: true }));
-      }
       setPossibleMoves([]);
       setSelectedPawn(null);
       setTurn((t: Turn) => (t === Turn.WHITE ? Turn.BLACK : Turn.WHITE));
     }
     //////////////////////////////////
     if (taken && turn === player) {
-     if(mat.white || mat.black){
-       
-     }
       setSelectedPawn(id);
       if (player !== undefined && pawn !== null) {
-        setPossibleMoves(showPossibleMoves(pawn, grid, id, player));
+        setPossibleMoves(showPossibleMoves(pawn, grid, id, player)
+         .filter((destination) => {
+            const { whiteMat, blackMat } = willCheckHandler(grid, id, destination);
+            if (player === PlayerColor.WHITE && whiteMat) {
+              return false;
+            } else if (player === PlayerColor.BLACK && blackMat) {
+              return false;
+            }
+            return true;
+          })
+        
+        
+        );
       }
     }
   };

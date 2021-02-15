@@ -1,5 +1,4 @@
-import { showPossibleMoves } from ".";
-import { Grid, Pawns, PlayerColor } from "../types";
+import { Grid, PlayerColor } from "../types";
 
 const checkCell = (
   grid: Grid,
@@ -11,24 +10,6 @@ const checkCell = (
 
   if (!cell) {
     return -1;
-  }
- const willMat = grid.some((cell) => {
-
-  let willMat;
-    if (
-      cell.taken &&
-      cell.player !== player &&
-      cell.pawn !== null &&
-      cell.pawn !== Pawns.king
-    ) {
-      willMat= showPossibleMoves(cell.pawn, grid, cell.id, player).some(
-        (cellId: number) => cellId === id + indicator);
-    }
-    return willMat
-  });
-
-  if(willMat){
-    return -1
   }
 
   if (!cell.taken || cell.player !== player) {

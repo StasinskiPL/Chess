@@ -13,7 +13,7 @@ export const showPossibleMoves = (
   player: PlayerColor
 ): number[] => {
   if (pawn === Pawns.pawn) {
-    return showPawnPossibleMoves(grid, id, player);
+    return showPawnPossibleMoves(grid, id, player)
   }
   if (pawn === Pawns.rook) {
     return showRookPossibleMoves(grid, id, player);
