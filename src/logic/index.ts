@@ -1,4 +1,4 @@
-import { Grid, Pawns, PlayerColor } from "../types";
+import { Grid, Pawns, Turn } from "../types";
 import { showBishopPossibleMoves } from "./bishopPossibleMoves";
 import { showKingPossibleMoves } from "./kingPossibleMoves";
 import { showKnightPossibleMoves } from "./knightPossibleMoves";
@@ -10,10 +10,10 @@ export const showPossibleMoves = (
   pawn: Pawns,
   grid: Grid,
   id: number,
-  player: PlayerColor
+  player: Turn
 ): number[] => {
   if (pawn === Pawns.pawn) {
-    return showPawnPossibleMoves(grid, id, player)
+    return showPawnPossibleMoves(grid, id, player);
   }
   if (pawn === Pawns.rook) {
     return showRookPossibleMoves(grid, id, player);

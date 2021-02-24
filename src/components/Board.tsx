@@ -1,5 +1,5 @@
-import React from "react";
-import { useChessContext } from "../context/ChessContext";
+import { memo } from "react";
+import { useChessContext } from "../context/ChessContextManager";
 import { Cell as CellType } from "../types";
 import Cell from "./Cell";
 
@@ -19,4 +19,4 @@ const Board: React.FC = () => {
   );
 };
 
-export default Board;
+export default memo(Board);

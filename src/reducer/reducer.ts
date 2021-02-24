@@ -1,9 +1,5 @@
 import { initialGrid } from "../logic/initialGrid";
-import { Grid, Pawns, PlayerColor } from "../types";
-
-type State = {
-  grid: Grid;
-};
+import { State, Pawns, Turn } from "../types";
 
 const MOVEPAWN = "MOVEPAWN";
 
@@ -13,11 +9,11 @@ interface MovePawnType {
     pawn: Pawns;
     prevCell: number;
     nextCell: number;
-    playerColor: PlayerColor;
+    playerColor: Turn;
   };
 }
 
-type Action = MovePawnType;
+export type Action = MovePawnType;
 
 export const movePawn = ({
   pawn,
@@ -28,7 +24,7 @@ export const movePawn = ({
   pawn: Pawns;
   prevCell: number;
   nextCell: number;
-  playerColor: PlayerColor;
+  playerColor: Turn;
 }): MovePawnType => {
   return {
     type: MOVEPAWN,

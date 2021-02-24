@@ -1,4 +1,4 @@
-import { Grid, Pawns, PlayerColor } from "../types";
+import { Grid, Pawns, Turn } from "../types";
 
 const addPawns = (grid: Grid): Grid => {
   grid = grid.map((cell) => {
@@ -7,7 +7,7 @@ const addPawns = (grid: Grid): Grid => {
         ...cell,
         pawn: Pawns.pawn,
         taken: true,
-        player: PlayerColor.BLACK,
+        player: Turn.BLACK,
       };
     }
     if (cell.id > 70 && cell.id < 79) {
@@ -15,7 +15,7 @@ const addPawns = (grid: Grid): Grid => {
         ...cell,
         pawn: Pawns.pawn,
         taken: true,
-        player: PlayerColor.WHITE,
+        player: Turn.WHITE,
       };
     }
 
@@ -24,7 +24,7 @@ const addPawns = (grid: Grid): Grid => {
         ...cell,
         pawn: Pawns.rook,
         taken: true,
-        player: PlayerColor.BLACK,
+        player: Turn.BLACK,
       };
     }
 
@@ -33,7 +33,7 @@ const addPawns = (grid: Grid): Grid => {
         ...cell,
         pawn: Pawns.rook,
         taken: true,
-        player: PlayerColor.WHITE,
+        player: Turn.WHITE,
       };
     }
 
@@ -42,7 +42,7 @@ const addPawns = (grid: Grid): Grid => {
         ...cell,
         pawn: Pawns.knight,
         taken: true,
-        player: PlayerColor.BLACK,
+        player: Turn.BLACK,
       };
     }
     if (cell.id === 82 || cell.id === 87) {
@@ -50,7 +50,7 @@ const addPawns = (grid: Grid): Grid => {
         ...cell,
         pawn: Pawns.knight,
         taken: true,
-        player: PlayerColor.WHITE,
+        player: Turn.WHITE,
       };
     }
 
@@ -59,7 +59,7 @@ const addPawns = (grid: Grid): Grid => {
         ...cell,
         pawn: Pawns.bishop,
         taken: true,
-        player: PlayerColor.BLACK,
+        player: Turn.BLACK,
       };
     }
     if (cell.id === 83 || cell.id === 86) {
@@ -67,7 +67,7 @@ const addPawns = (grid: Grid): Grid => {
         ...cell,
         pawn: Pawns.bishop,
         taken: true,
-        player: PlayerColor.WHITE,
+        player: Turn.WHITE,
       };
     }
 
@@ -76,7 +76,7 @@ const addPawns = (grid: Grid): Grid => {
         ...cell,
         pawn: Pawns.queen,
         taken: true,
-        player: PlayerColor.BLACK,
+        player: Turn.BLACK,
       };
     }
     if (cell.id === 84) {
@@ -84,7 +84,7 @@ const addPawns = (grid: Grid): Grid => {
         ...cell,
         pawn: Pawns.queen,
         taken: true,
-        player: PlayerColor.WHITE,
+        player: Turn.WHITE,
       };
     }
 
@@ -93,7 +93,7 @@ const addPawns = (grid: Grid): Grid => {
         ...cell,
         pawn: Pawns.king,
         taken: true,
-        player: PlayerColor.BLACK,
+        player: Turn.BLACK,
       };
     }
     if (cell.id === 85) {
@@ -101,7 +101,7 @@ const addPawns = (grid: Grid): Grid => {
         ...cell,
         pawn: Pawns.king,
         taken: true,
-        player: PlayerColor.WHITE,
+        player: Turn.WHITE,
       };
     }
 
@@ -116,8 +116,8 @@ export const initialGrid = (): Grid => {
     id: +index.toString(8) + 11,
     player:
       (index % 16 > 8 && index % 2 === 1) || (index % 16 < 8 && index % 2 === 0)
-        ? PlayerColor.WHITE
-        : PlayerColor.BLACK,
+        ? Turn.WHITE
+        : Turn.BLACK,
     pawn: null,
     taken: false,
   }));

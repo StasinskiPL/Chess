@@ -1,9 +1,9 @@
-import { Grid, PlayerColor } from "../types";
+import { Grid, Turn } from "../types";
 
 const checkCell = (
   grid: Grid,
   id: number,
-  player: PlayerColor,
+  player: Turn,
   indicator: number
 ): number => {
   const cell = grid.find((cell) => cell.id === id + indicator);
@@ -22,7 +22,7 @@ const checkCell = (
 export function showKingPossibleMoves(
   grid: Grid,
   id: number,
-  player: PlayerColor
+  player: Turn
 ): number[] {
   const TL = checkCell(grid, id, player, -11);
   const T = checkCell(grid, id, player, -10);

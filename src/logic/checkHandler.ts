@@ -1,5 +1,5 @@
 import { showPossibleMoves } from ".";
-import { Cell, Grid, Pawns, PlayerColor } from "../types";
+import { Cell, Grid, Pawns, Turn } from "../types";
 
 export const willCheckHandler = (
   grid: Grid,
@@ -28,7 +28,7 @@ export const willCheckHandler = (
         return false;
       });
       if (willCheck) {
-        if (cell.player === PlayerColor.WHITE) {
+        if (cell.player === Turn.WHITE) {
           mat = { ...mat, blackMat: true };
         } else {
           mat = { ...mat, whiteMat: true };
@@ -61,7 +61,7 @@ const swipeCells = (grid: Grid, prev: number, next: number): Grid => {
       pawn: prevCell.pawn,
       taken: true,
       player: prevCell.player,
-    }
+    };
   }
   return newGrid;
 };
