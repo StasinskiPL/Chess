@@ -6,7 +6,9 @@ import { showPossibleMoves } from "../logic";
 import { willCheckHandler } from "../logic/checkHandler";
 import { pawnToDisplay } from "../helpers/pawnToDispay";
 import { cellColor } from "../helpers/cellColor";
-import { useDrag } from "react-dnd";
+import { useDrag, useDrop } from "react-dnd";
+
+const pawns = "ROOK_KNIGHT_BISHOP_QUEEN_KING_PAWN";
 
 const CellComponent: React.FC<Cell> = ({ pawn, taken, player, id }) => {
   const {
@@ -21,32 +23,23 @@ const CellComponent: React.FC<Cell> = ({ pawn, taken, player, id }) => {
   } = useChessContext();
 
   const [{ isDragging }, drag] = useDrag({
-    item: { type: pawn ?? "", id },
+    item: { type: pawn ?? "" },
     collect: (monitor: any) => ({
-      isDragging: monitor.isDragging(),
+      isDragging: !!monitor.isDragging(),
     }),
+  });
+  const [, drop] = useDrop({
+    accept: pawns.split("_"),
+
+    canDrop: () => possibleMoves.some((posib) => posib === id),
+    drop: () => handleMovePawn(),
   });
 
   const selectHandler = () => {
     // move pawn if selected
     if (selectedPawn !== null && possibleMoves.some((p: number) => p === id)) {
-      const pawn = grid.find((cell: Cell) => cell.id === selectedPawn);
-
-      if (pawn && pawn.pawn && pawn.player) {
-        dispatch(
-          movePawn({
-            pawn: pawn.pawn,
-            prevCell: selectedPawn,
-            nextCell: id,
-            playerColor: pawn.player,
-          })
-        );
-      }
-      setPossibleMoves([]);
-      setSelectedPawn(null);
-      setTurn((t: Turn) => (t === Turn.WHITE ? Turn.BLACK : Turn.WHITE));
+      handleMovePawn();
     }
-    //////////////////////////////////
     // select pawn
     if (taken && turn === player && pawn) {
       setSelectedPawn(id);
@@ -69,18 +62,38 @@ const CellComponent: React.FC<Cell> = ({ pawn, taken, player, id }) => {
     }
   };
 
+  const handleMovePawn = () => {
+    const pawn = grid.find((cell: Cell) => cell.id === selectedPawn);
+
+    if (pawn?.pawn && pawn?.player && selectedPawn) {
+      dispatch(
+        movePawn({
+          pawn: pawn.pawn,
+          prevCell: selectedPawn,
+          nextCell: id,
+          playerColor: pawn.player,
+        })
+      );
+    }
+    setPossibleMoves([]);
+    setSelectedPawn(null);
+    setTurn((t: Turn) => (t === Turn.WHITE ? Turn.BLACK : Turn.WHITE));
+  };
+
   const opacity = isDragging ? 0 : 1;
 
   return (
     <article
-      ref={drag}
+      ref={drop}
       data-id={id}
       className={`cell ${cellColor(id)} ${taken ? "taken" : ""}
        ${selectedPawn === id ? "selected" : ""}
        ${possibleMoves.some((p: number) => p === id) ? "possibleMove" : ""}
        ${player === Turn.BLACK ? "black" : "white"}`}
       onMouseDown={selectHandler}>
-      <span style={{ opacity }}>{pawnToDisplay(pawn)}</span>
+      <span ref={drag} style={{ opacity }}>
+        {pawnToDisplay(pawn)}
+      </span>
     </article>
   );
 };
