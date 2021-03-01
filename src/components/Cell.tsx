@@ -8,8 +8,6 @@ import { pawnToDisplay } from "../helpers/pawnToDispay";
 import { cellColor } from "../helpers/cellColor";
 import { useDrag, useDrop } from "react-dnd";
 
-const pawns = "ROOK_KNIGHT_BISHOP_QUEEN_KING_PAWN";
-
 const CellComponent: React.FC<Cell> = ({ pawn, taken, player, id }) => {
   const {
     selectedPawn,
@@ -23,16 +21,19 @@ const CellComponent: React.FC<Cell> = ({ pawn, taken, player, id }) => {
   } = useChessContext();
 
   const [{ isDragging }, drag] = useDrag({
-    item: { type: pawn ?? "" },
+    item: { type: "cell" },
     collect: (monitor: any) => ({
       isDragging: !!monitor.isDragging(),
     }),
   });
   const [, drop] = useDrop({
-    accept: pawns.split("_"),
+    accept: "cell",
 
     canDrop: () => possibleMoves.some((posib) => posib === id),
-    drop: () => handleMovePawn(),
+    drop: () => {
+      handleMovePawn();
+      return undefined;
+    },
   });
 
   const selectHandler = () => {
