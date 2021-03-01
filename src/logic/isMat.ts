@@ -9,7 +9,6 @@ export const isMat = (
       gameResult: "White Won" | "Black Won";
       gameFinished: true;
     } => {
-  console.log(grid);
   const whiteMat = grid
     .filter((cell) => cell.player === Turn.WHITE && cell.pawn)
     .every((cell) => {
@@ -23,7 +22,6 @@ export const isMat = (
   const blackMat = grid
     .filter((cell) => cell.player === Turn.BLACK && cell.pawn)
     .every((cell) => {
-      console.log(cell);
       let posible;
       if (cell?.pawn) {
         posible = showPossibleMoves(cell.pawn, grid, cell.id, Turn.BLACK, true)
@@ -31,9 +29,6 @@ export const isMat = (
       }
       return posible === 0;
     });
-
-  console.log(whiteMat);
-  console.log(blackMat);
 
   if (whiteMat || blackMat) {
     return {

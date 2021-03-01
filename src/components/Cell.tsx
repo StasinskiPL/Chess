@@ -3,7 +3,6 @@ import { Cell, Turn } from "../types";
 import { movePawn } from "../reducer/reducer";
 import { useChessContext } from "../context/ChessContextManager";
 import { showPossibleMoves } from "../logic";
-import { willCheckHandler } from "../logic/checkHandler";
 import { pawnToDisplay } from "../helpers/pawnToDispay";
 import { cellColor } from "../helpers/cellColor";
 import { useDrag, useDrop } from "react-dnd";
@@ -28,12 +27,8 @@ const CellComponent: React.FC<Cell> = ({ pawn, taken, player, id }) => {
   });
   const [, drop] = useDrop({
     accept: "cell",
-
     canDrop: () => possibleMoves.some((posib) => posib === id),
-    drop: () => {
-      handleMovePawn();
-      return undefined;
-    },
+    drop: () => handleMovePawn(),
   });
 
   const selectHandler = () => {
