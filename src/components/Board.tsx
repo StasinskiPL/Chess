@@ -2,6 +2,7 @@ import { memo } from "react";
 import { useChessContext } from "../context/ChessContextManager";
 import { Cell as CellType } from "../types";
 import Cell from "./Cell";
+import GameResult from "./GameResult";
 
 const Board: React.FC = () => {
   const {
@@ -15,6 +16,7 @@ const Board: React.FC = () => {
           <Cell key={cell.id} {...cell} />
         ))}
       </div>
+      <GameResult />
     </section>
   );
 };

@@ -1,6 +1,6 @@
 import { createContext, useContext } from "react";
 import { State, Turn } from "../types";
-import { Action } from "../reducer/reducer";
+import { Action, initialState } from "../reducer/reducer";
 import { initialGrid } from "../logic/initialGrid";
 
 export type ContextTypes = {
@@ -15,7 +15,7 @@ export type ContextTypes = {
 };
 
 const contextInitialState: ContextTypes = {
-  state: { grid: initialGrid() },
+  state: initialState,
   dispatch: () => void 0,
   turn: Turn.WHITE,
   setTurn: () => void 0,

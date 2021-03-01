@@ -5,10 +5,10 @@ export const willCheckHandler = (
   grid: Grid,
   prev: number,
   destination: number
-): { whiteMat: boolean; blackMat: boolean } => {
-  let mat = {
-    whiteMat: false,
-    blackMat: false,
+): { whiteCheck: boolean; blackCheck: boolean } => {
+  let check = {
+    whiteCheck: false,
+    blackCheck: false,
   };
 
   grid = swipeCells(grid, prev, destination);
@@ -19,7 +19,8 @@ export const willCheckHandler = (
         cell.pawn,
         grid,
         cell.id,
-        cell.player
+        cell.player,
+        false
       ).some((id) => {
         const destination = grid.find((c: Cell) => c.id === id);
         if (destination && destination.pawn === Pawns.king) {
@@ -29,15 +30,15 @@ export const willCheckHandler = (
       });
       if (willCheck) {
         if (cell.player === Turn.WHITE) {
-          mat = { ...mat, blackMat: true };
+          check = { ...check, blackCheck: true };
         } else {
-          mat = { ...mat, whiteMat: true };
+          check = { ...check, whiteCheck: true };
         }
       }
     }
   });
 
-  return mat;
+  return check;
 };
 
 const swipeCells = (grid: Grid, prev: number, next: number): Grid => {

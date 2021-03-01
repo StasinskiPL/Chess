@@ -18,6 +18,8 @@ export type Grid = Cell[];
 
 export type State = {
   grid: Grid;
+  gameResult: null | string;
+  gameFinished: boolean;
 };
 
 export enum Turn {

@@ -44,22 +44,7 @@ const CellComponent: React.FC<Cell> = ({ pawn, taken, player, id }) => {
     // select pawn
     if (taken && turn === player && pawn) {
       setSelectedPawn(id);
-      setPossibleMoves(
-        showPossibleMoves(pawn, grid, id, player).filter((destination) => {
-          const { whiteMat, blackMat } = willCheckHandler(
-            grid,
-            id,
-            destination
-          );
-          if (
-            (player === Turn.WHITE && whiteMat) ||
-            (player === Turn.BLACK && blackMat)
-          ) {
-            return false;
-          }
-          return true;
-        })
-      );
+      setPossibleMoves(showPossibleMoves(pawn, grid, id, player, true));
     }
   };
 
