@@ -1,7 +1,6 @@
 import { createContext, useContext } from "react";
 import { State, Turn } from "../types";
 import { Action, initialState } from "../reducer/reducer";
-import { initialGrid } from "../logic/initialGrid";
 
 export type ContextTypes = {
   state: State;
